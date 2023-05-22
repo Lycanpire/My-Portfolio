@@ -147,7 +147,7 @@ const About = () => {
               <a href="https://www.arghomes.in//">a start-up</a>,{' '}
               <a href="https://www.cognizant.com/in/en/">an IT Giant</a>,{' '}
               <a href="https://www.ibm.com/">an Innovation Leader corporation</a>, and{' '}
-              <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led design Placement Committee</a>. My
+              <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led Placement Committee</a>. My
               main focus these days is building accessible, inclusive products and digital
               experiences at <a href="https://www.instagram.com/gymmedaari/">Gymmedaari</a> for GenZs.
             </p>
