@@ -67,8 +67,7 @@ const Hero = () => {
       <p>
       Syed Akbar Abbas Jafri is an MBA graduate from XIMB with expertise in full stack software development and consulting, honed through his experience at Cognizant.{' '}
         <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer">
-          Hey, Catchup on my casual side!
-        </a>
+his        </a>
         .
       </p>
     </>
