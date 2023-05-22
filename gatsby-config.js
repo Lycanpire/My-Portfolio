@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'Syed Akbar Abbas Jafri',
     description:
-      'Syed Akbar Abbas Jafri is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.',
+      'Syed Akbar Abbas Jafri is a Business grad who specializes in building (and occasionally designing) exceptional digital experiences.',
     siteUrl: 'https://gymmedaari.com', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
     twitterUsername: '@',
