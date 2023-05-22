@@ -110,14 +110,14 @@ const Footer = () => {
 
           {githubInfo.stars && githubInfo.forks && (
             <div className="linkedin-stats">
-              <span>
+              {/* <span>
                 <Icon name="Star" />
                 <span>{githubInfo.stars.toLocaleString()}</span>
               </span>
               <span>
                 <Icon name="Fork" />
                 <span>{githubInfo.forks.toLocaleString()}</span>
-              </span>
+              </span> */}
             </div>
           )}
         </a>
@@ -126,7 +126,7 @@ const Footer = () => {
 
       <StyledCredit tabindex="-1">
         <a href="https://github.com/bchiang7/v4">
-          <div>Template with love by Brittany Chiang!✨</div>
+          <div>Template  by Brittany Chiang!✨</div>
 
           {githubInfo.stars && githubInfo.forks && (
             <div className="github-stats">
