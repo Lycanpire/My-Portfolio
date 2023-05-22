@@ -61,7 +61,7 @@ const Contact = () => {
 
       <p>
         Although I’m not currently looking for any new opportunities, my inbox/Linkedin/insta is always open. 
-        Whether you have a question or just want to say hi, I’ll try my best to get back to you!. If you want to have your custom portfolio website, Do connect with me!
+        Whether you have a question or just want to say hi, I’ll try my best to get back to you!. If you want to have your custom portfolio website, Do connect with me!!
       </p>
 
       <a className="email-link" href={`mailto:${email}`}>
