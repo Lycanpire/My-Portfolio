@@ -65,8 +65,8 @@ const Hero = () => {
   const four = (
     <>
       <p>
-      I am Syed Akbar Abbas Jafri, an MBA graduate from XIMB. I have expertise in full stack software development and consulting, which I honed through my experience at Cognizant.{' '}
-        <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer">
+      I am Syed Akbar Abbas Jafri, an MBA graduate from XIMB with expertise in Marketing, Consulting, and Full Stack Software Development. Through my experience at Cognizant, my own startup, and multiple internships, I have honed my skills in devising creative marketing strategies, providing valuable consulting insights, and developing end-to-end software solutions. My diverse background and continuous learning mindset enable me to thrive in challenging environments and deliver impactful results. {' '}
+        <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer"> <br></br>
         However, let's take a moment to catch up on my casual side!
         </a>
         .
