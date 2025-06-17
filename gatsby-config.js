@@ -152,7 +152,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: 'UA-45666519-2',
+        trackingId: process.env.GA_TRACKING_ID || 'G-XXXXXXXXXX', // Replace with your GA4 measurement ID
+        head: true,
+        anonymize: true,
+        respectDNT: true,
+        pageTransitionDelay: 0,
+        enableWebVitalsTracking: true,
       },
     },
   ],

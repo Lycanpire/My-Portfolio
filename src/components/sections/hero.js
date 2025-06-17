@@ -29,11 +29,20 @@ const StyledHeroSection = styled.section`
     }
   }
 
-  h3 {
+  h3.big-heading {
     margin-top: 5px;
     color: var(--slate);
     line-height: 0.9;
     font-size: clamp(2rem, 8vw, 4rem);
+  }
+
+  h3.subtitle-heading {
+    margin-top: 5px;
+    color: var(--slate);
+    line-height: 1.1;
+    font-size: clamp(1.1rem, 4vw, 2rem);
+    font-weight: 400;
+    opacity: 0.85;
   }
 
   p {
@@ -62,7 +71,7 @@ const Hero = () => {
 
   const one = <h1><br></br>Hi, my name is</h1>;
   const two = <h3 className="big-heading">Syed Akbar Abbas Jafri(CSM®)</h3>;
-  const three = <h3 className="big-heading">I build things for the Businesses.</h3>;
+  const three = <h3 className="subtitle-heading">I turn business challenges into AI-driven opportunities</h3>;
   const four = (
     <>
       <p>
@@ -76,10 +85,10 @@ const Hero = () => {
   const five = (
     <a
       className="email-link"
-      href="https://gymmedaari.blinkstore.in/shop/men-tshirt"
+      href="https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/"
       target="_blank"
       rel="noreferrer">
-      Check out my Online store!
+      Also, Feel free to reach out — whether it’s for collaboration, tech talk, or just a good conversation!"
     </a>
   );
 

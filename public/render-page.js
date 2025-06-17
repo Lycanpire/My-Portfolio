@@ -4067,13 +4067,13 @@ var plugins = [{
   plugin: __webpack_require__(/*! ./node_modules/gatsby-plugin-google-analytics/gatsby-ssr */ "./node_modules/gatsby-plugin-google-analytics/gatsby-ssr.js"),
   options: {
     "plugins": [],
-    "trackingId": "UA-45666519-2",
-    "head": false,
-    "anonymize": false,
-    "respectDNT": false,
-    "exclude": [],
+    "trackingId": "G-XXXXXXXXXX",
+    "head": true,
+    "anonymize": true,
+    "respectDNT": true,
     "pageTransitionDelay": 0,
-    "enableWebVitalsTracking": false
+    "enableWebVitalsTracking": true,
+    "exclude": []
   }
 }];
 /* global plugins */

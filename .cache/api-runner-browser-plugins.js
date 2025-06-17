@@ -15,7 +15,7 @@ module.exports = [{
       options: {"plugins":[],"maxWidth":700,"linkImagesToOriginal":true,"quality":90,"showCaptions":false,"markdownCaptions":false,"sizeByPixelDensity":false,"backgroundColor":"white","withWebp":false,"loading":"lazy","decoding":"async","disableBgImageOnAlpha":false,"disableBgImage":false},
     },{
       plugin: require('../node_modules/gatsby-plugin-google-analytics/gatsby-browser.js'),
-      options: {"plugins":[],"trackingId":"UA-45666519-2","head":false,"anonymize":false,"respectDNT":false,"exclude":[],"pageTransitionDelay":0,"enableWebVitalsTracking":false},
+      options: {"plugins":[],"trackingId":"G-XXXXXXXXXX","head":true,"anonymize":true,"respectDNT":true,"pageTransitionDelay":0,"enableWebVitalsTracking":true,"exclude":[]},
     },{
       plugin: require('../gatsby-browser.js'),
       options: {"plugins":[]},
