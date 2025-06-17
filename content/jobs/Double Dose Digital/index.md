@@ -9,6 +9,6 @@ url: 'https://www.doubledose.digital'
 
 - Led Digital Transformation consulting initiatives to enhance online presence and user engagement.
 - Oversaw the planning, design, and launch of the business's landing page, ensuring alignment with brand identity and customer journey.
--Implemented data collection mechanisms (such as contact forms, lead magnets, and tracking tools) to capture valuable customer insights.
--Integrated a secure and seamless payment gateway solution, enabling smooth online transactions and improving user trust.
--Coordinated with cross-functional teams including design, development, and marketing to ensure timely delivery and functionality.
+- Implemented data collection mechanisms (such as contact forms, lead magnets, and tracking tools) to capture valuable customer insights.
+- Integrated a secure and seamless payment gateway solution, enabling smooth online transactions and improving user trust.
+- Coordinated with cross-functional teams including design, development, and marketing to ensure timely delivery and functionality.
