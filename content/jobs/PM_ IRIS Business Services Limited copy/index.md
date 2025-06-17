@@ -1,9 +1,9 @@
 ---
-date: '2025-06-18'
+date: '2025-06-19'
 title: 'Product Manager (Promoted from Project Manager)'
 company: 'Iris Business Services Limited'
 location: 'Mumbai, Maharasthra'
-range: 'July 2024 - Present'
+range: 'June 2025 - Present'
 promotion: 'Promoted to Product Manager in December 2024'
 
 ---

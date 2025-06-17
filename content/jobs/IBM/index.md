@@ -3,7 +3,7 @@ date: '2023-04-19'
 title: 'Technology Sales Specialist Intern'
 company: 'IBM'
 location: 'Mumbai, Maharashtra'
-range: 'April - June 2023'
+range: 'April 2023 - June 2023'
 url: 'https://www.ibm.com/in-en'
 ---
 

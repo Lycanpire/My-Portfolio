@@ -1,13 +1,14 @@
 ---
 date: '2022-05-23'
-title: 'IT Manager & Strategy Consultant'
+title: 'IT Manager & Strategy Consultant(Part-time)'
 company: 'Double Dose Digital'
 location: 'Boston, MA'
-range: 'May 2022 - July 2022'
+range: 'May 2022 - June 2024'
 url: 'https://www.doubledose.digital'
 ---
 
-- Deliver high-quality, robust production code for a diverse array of projects for clients including Harvard Business School, Everytown for Gun Safety, Pratt Institute, Koala Health, Vanderbilt University, The 19th News, and more
-- Work alongside creative directors to lead the research, development, and architecture of technical solutions to fulfill business requirements
-- Collaborate with designers, project managers, and other engineers to transform creative concepts into production realities for clients and stakeholders
-- Provide leadership within engineering department through close collaboration, knowledge shares, and mentorship
+- Led Digital Transformation consulting initiatives to enhance online presence and user engagement.
+- Oversaw the planning, design, and launch of the business's landing page, ensuring alignment with brand identity and customer journey.
+-Implemented data collection mechanisms (such as contact forms, lead magnets, and tracking tools) to capture valuable customer insights.
+-Integrated a secure and seamless payment gateway solution, enabling smooth online transactions and improving user trust.
+-Coordinated with cross-functional teams including design, development, and marketing to ensure timely delivery and functionality.

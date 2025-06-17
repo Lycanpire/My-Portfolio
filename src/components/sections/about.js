@@ -143,10 +143,11 @@ const About = () => {
 
             <p>
             Over the years, I’ve had the privilege of contributing to organizations across diverse domains—including an{' '}
-              <a href="https://doubledose.digital/">an advertising agency</a>,{' '}
+              
               <a href="https://irisgst.com/">an AI-powered Fintech firm</a>,{' '}
               <a href="https://www.cognizant.com/in/en/">an IT services leader</a>,{' '}
-              <a href="https://www.ibm.com/">an Innovation Leader corporation</a>, and{' '}
+              <a href="https://www.ibm.com/">an Innovation Leader corporation</a>, {' '}
+              <a href="https://doubledose.digital/">an advertising agency</a>, and{' '}
               <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led Placement Committee</a>.  My core expertise lies in Product Management, 
               AI Consultancy, and Project Management, where I define product vision, lead cross-functional teams, and enable organizations to adopt emerging
               technologies like AI/ML to drive growth and efficiency.
@@ -154,11 +155,11 @@ const About = () => {
             </p>
 
             <p>
-              I also during Covid{' '}
+              During Covid, I{' '}
               <a href="https://www.instagram.com/gymmedaari">
-                launched an social media Fitness Consultancy
+                launched a social media Fitness Consultancy
               </a>{' '}
-             for helping people staying fit while being at home
+             for helping people staying fit while being at home.
             </p>
 
             <p>Here are a few skills I’ve have garnered recently:</p>
