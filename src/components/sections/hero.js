@@ -18,14 +18,14 @@ const StyledHeroSection = styled.section`
   }
 
   h1 {
-    margin: 0 0 30px 4px;
+    margin: 100px 0 30px 4px;
     color: var(--green);
     font-family: var(--font-mono);
     font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
     font-weight: 400;
 
     @media (max-width: 480px) {
-      margin: 0 0 20px 2px;
+      margin: 80px 0 20px 2px;
     }
   }
 
@@ -33,6 +33,7 @@ const StyledHeroSection = styled.section`
     margin-top: 5px;
     color: var(--slate);
     line-height: 0.9;
+    font-size: clamp(2rem, 8vw, 4rem);
   }
 
   p {
@@ -59,14 +60,13 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Syed Akbar Abbas Jafri(SAAJ)</h2>;
+  const one = <h1><br></br>Hi, my name is</h1>;
+  const two = <h3 className="big-heading">Syed Akbar Abbas Jafri(CSM®)</h3>;
   const three = <h3 className="big-heading">I build things for the Businesses.</h3>;
   const four = (
     <>
       <p>
-      I am Syed Akbar Abbas Jafri, an MBA graduate from XIMB with expertise in Marketing, Consulting, and Full Stack Software Development. Through my experience at Cognizant, my own startup, and multiple internships, I have honed my skills in devising creative marketing strategies, providing valuable consulting insights, and developing end-to-end software solutions. My diverse background and continuous learning mindset enable me to thrive in challenging environments and deliver impactful results. {' '}
-        <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer"> <br></br>
+      I am Syed Akbar Abbas Jafri, an MBA graduate from XIMB with expertise in Product Management, Project Management, AI Consultancy, Scrum practices and Full Stack Software Development. Through my experience at IRIS Business Services, Cognizant, my own startup, and multiple internships, I have honed my skills in driving AI-led solutions, managing cross-functional projects, and building scalable digital products. My diverse background and continuous learning mindset enable me to bridge the gap between technology and business, solve complex problems, and deliver impactful, market-ready solutions.  <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer"> <br></br>
         However, let's take a moment to catch up on my casual side!
         </a>
         .
@@ -76,7 +76,7 @@ const Hero = () => {
   const five = (
     <a
       className="email-link"
-      href="https://gymmedaari.com"
+      href="https://gymmedaari.blinkstore.in/shop/men-tshirt"
       target="_blank"
       rel="noreferrer">
       Check out my Online store!

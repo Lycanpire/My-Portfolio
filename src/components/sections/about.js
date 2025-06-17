@@ -125,7 +125,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['Product Management (AI & Machine Learning)', 'Marketing Research', 'CRM', 'Project Management', 'Full Stack Developer', 'Strategy & Business Transformation'];
+  const skills = ['Product Management (SaaS, AI & Machine Learning)', 'AI Consultancy & Solutioning', 'Project Management (Agile & Waterfall)', 'Business Strategy & Digital Transformation', 'Market Research & Customer Insights', 'Full Stack Web Development' ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -142,23 +142,23 @@ const About = () => {
             </p>
 
             <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
+            Over the years, I’ve had the privilege of contributing to organizations across diverse domains—including an{' '}
               <a href="https://doubledose.digital/">an advertising agency</a>,{' '}
-              <a href="https://www.arghomes.in//">a start-up</a>,{' '}
-              <a href="https://www.cognizant.com/in/en/">an IT Giant</a>,{' '}
+              <a href="https://irisgst.com/">an AI-powered Fintech firm</a>,{' '}
+              <a href="https://www.cognizant.com/in/en/">an IT services leader</a>,{' '}
               <a href="https://www.ibm.com/">an Innovation Leader corporation</a>, and{' '}
-              <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led Placement Committee</a>. My
-              main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://www.instagram.com/gymmedaari/">Gymmedaari</a> for GenZs.
+              <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led Placement Committee</a>.  My core expertise lies in Product Management, 
+              AI Consultancy, and Project Management, where I define product vision, lead cross-functional teams, and enable organizations to adopt emerging
+              technologies like AI/ML to drive growth and efficiency.
+      
             </p>
 
             <p>
-              I also recently{' '}
-              <a href="https://www.GYMMEDAARI.COM">
-                launched an online store & Fitness Consultancy
+              I also during Covid{' '}
+              <a href="https://www.instagram.com/gymmedaari">
+                launched an social media Fitness Consultancy
               </a>{' '}
-              that covers everything you need to look elegant & fashionable at the
-               same time.
+             for helping people staying fit while being at home
             </p>
 
             <p>Here are a few skills I’ve have garnered recently:</p>
