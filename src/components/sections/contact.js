@@ -57,11 +57,13 @@ const Contact = () => {
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="numbered-heading overline">What’s Next?</h2>
 
-      <h2 className="title">Get In Touch</h2>
+      <h2 className="title">Let's connect!</h2>
 
       <p>
-        Although I’m not currently looking for any new opportunities, my inbox/Linkedin/insta is always open. 
-        Whether you have a question or just want to say hi, I’ll try my best to get back to you!. If you want to have your custom portfolio website, Do connect with me!!
+      I'm always open to meaningful conversations — whether it’s about tech, AI, product management, or just life in general! 😊
+Feel free to drop a message on LinkedIn, Instagram, or email — I’ll do my best to respond.
+<br></br>
+And hey, if you’re thinking of building your own custom portfolio website or want some advice on starting your digital journey, I’d love to help. Let’s create something awesome together! 🚀
       </p>
 
       <a className="email-link" href={`mailto:${email}`}>
