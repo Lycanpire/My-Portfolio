@@ -78,7 +78,7 @@ const Hero = () => {
       I am Syed Akbar Abbas Jafri, an MBA graduate from XIMB with expertise in Product Management, Project Management, AI Consultancy, Scrum practices and Full Stack Software Development. Through my experience at IRIS Business Services, Cognizant, my own startup, and multiple internships, I have honed my skills in driving AI-led solutions, managing cross-functional projects, and building scalable digital products. My diverse background and continuous learning mindset enable me to bridge the gap between technology and business, solve complex problems, and deliver impactful, market-ready solutions.  <a href="https://www.instagram.com/the_guy_is_no_one/" target="_blank" rel="noreferrer"> <br></br>
         However, let's take a moment to catch up on my casual side!
         </a>
-        .
+      
       </p>
     </>
   );
