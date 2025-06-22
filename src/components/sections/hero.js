@@ -88,7 +88,7 @@ const Hero = () => {
       href="https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/"
       target="_blank"
       rel="noreferrer">
-      Also, Feel free to reach out — whether it’s for collaboration, tech talk, or just a good conversation!
+      Also, Feel free to reach out — whether it's for collaboration, tech talk, or just a good conversation!
     </a>
   );
 

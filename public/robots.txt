@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://gymmedaari.com/sitemap-index.xml
+Sitemap: https://gymmedaari.com/sitemap.xml
 Host: https://gymmedaari.com
