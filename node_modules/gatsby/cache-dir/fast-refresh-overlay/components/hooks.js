@@ -10,8 +10,17 @@ const initialResponse = {
   sourceContent: null,
 }
 
-export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
-  const url =
+export function useStackFrame(codeFrameInformation) {
+  const {
+    moduleId,
+    lineNumber,
+    columnNumber,
+    skipSourceMap,
+    endLineNumber,
+    endColumnNumber,
+  } = codeFrameInformation ?? {}
+
+  let url =
     `/__original-stack-frame?moduleId=` +
     window.encodeURIComponent(moduleId) +
     `&lineNumber=` +
@@ -19,9 +28,23 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
     `&columnNumber=` +
     window.encodeURIComponent(columnNumber)
 
+  if (skipSourceMap) {
+    url += `&skipSourceMap=true`
+  }
+
+  if (endLineNumber) {
+    url += `&endLineNumber=` + window.encodeURIComponent(endLineNumber)
+
+    if (endColumnNumber) {
+      url += `&endColumnNumber=` + window.encodeURIComponent(endColumnNumber)
+    }
+  }
+
   const [response, setResponse] = React.useState(initialResponse)
 
   React.useEffect(() => {
+    if (!codeFrameInformation) return
+
     async function fetchData() {
       try {
         const res = await fetch(url)
@@ -36,6 +59,38 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
       } catch (err) {
         setResponse({
           ...initialResponse,
+          decoded: prettifyStack(err.message),
+        })
+      }
+    }
+    fetchData()
+  }, [])
+
+  return response
+}
+
+export function useFileCodeFrame({ filePath, lineNumber, columnNumber }) {
+  const url =
+    `/__file-code-frame?filePath=` +
+    window.encodeURIComponent(filePath) +
+    `&lineNumber=` +
+    window.encodeURIComponent(lineNumber) +
+    `&columnNumber=` +
+    window.encodeURIComponent(columnNumber)
+
+  const [response, setResponse] = React.useState({ decoded: null })
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(url)
+        const json = await res.json()
+        const decoded = prettifyStack(json.codeFrame)
+        setResponse({
+          decoded,
+        })
+      } catch (err) {
+        setResponse({
           decoded: prettifyStack(err.message),
         })
       }

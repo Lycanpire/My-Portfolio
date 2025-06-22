@@ -1,11 +1,12 @@
 "use strict";
 
 exports.__esModule = true;
-exports.ArrowDown = exports.ArrowRight = exports.ArrowUp = exports.ArrowLeft = exports.Home = exports.End = exports.PageDown = exports.PageUp = exports.Space = exports.Escape = exports.Enter = exports.Tab = void 0;
+exports.Tab = exports.Space = exports.PageUp = exports.PageDown = exports.Home = exports.Escape = exports.Enter = exports.End = exports.ArrowUp = exports.ArrowRight = exports.ArrowLeft = exports.ArrowDown = void 0;
 // Copied from https://github.com/carbon-design-system/carbon
 // License: Apache-2.0
 // Copyright IBM Corp. 2016, 2018
 // Entrypoint: packages/react/src/internal/keyboard/keys.js
+
 const Tab = {
   key: `Tab`,
   which: 9,
@@ -19,7 +20,8 @@ const Enter = {
 };
 exports.Enter = Enter;
 const Escape = {
-  key: [`Escape`, // IE11 Escape
+  key: [`Escape`,
+  // IE11 Escape
   `Esc`],
   which: 27,
   keyCode: 27
@@ -79,3 +81,4 @@ const ArrowDown = {
   keyCode: 40
 };
 exports.ArrowDown = ArrowDown;
+//# sourceMappingURL=keys.js.map

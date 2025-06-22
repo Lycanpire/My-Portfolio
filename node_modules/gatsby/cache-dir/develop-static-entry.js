@@ -3,10 +3,8 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import { apiRunner } from "./api-runner-ssr"
-// import testRequireError from "./test-require-error"
-// For some extremely mysterious reason, webpack adds the above module *after*
-// this module so that when this code runs, testRequireError is undefined.
-// So in the meantime, we'll just inline it.
+import asyncRequires from "$virtual/async-requires"
+
 const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]
@@ -124,4 +122,8 @@ export default ({ pagePath }) => {
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
   return htmlStr
+}
+
+export function getPageChunk({ componentChunkName }) {
+  return asyncRequires.components[componentChunkName]()
 }
