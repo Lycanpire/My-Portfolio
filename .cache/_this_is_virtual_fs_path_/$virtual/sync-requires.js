@@ -4,7 +4,7 @@ const preferDefault = m => (m && m.default) || m
 
 
 exports.components = {
-  "component---cache-dev-404-page-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/.cache/dev-404-page.js")),
+  "component---cache-caches-gatsby-plugin-offline-app-shell-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/.cache/caches/gatsby-plugin-offline/app-shell.js")),
   "component---src-pages-404-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/404.js")),
   "component---src-pages-analytics-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/analytics.js")),
   "component---src-pages-archive-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/archive.js")),
