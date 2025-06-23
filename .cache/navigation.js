@@ -5,8 +5,10 @@ import { maybeGetBrowserRedirect } from "./redirect-utils.js"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
-import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
+import {
+  navigate as reachNavigate,
+  globalHistory,
+} from "@gatsbyjs/reach-router"
 import { parsePath } from "gatsby-link"
 
 function maybeRedirect(pathname) {
@@ -43,7 +45,7 @@ const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
     if (
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND &&
       process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
     ) {
       emitter.emit(`onRouteUpdate`, { location, prevLocation })
@@ -85,7 +87,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname).then(pageResources => {
+  loader.loadPage(pathname + search).then(pageResources => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -102,10 +104,6 @@ const navigate = (to, options = {}) => {
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {
-      // window.___webpackCompilationHash gets set in production-app.js after navigationInit() is called
-      // So on a direct visit of a page with a browser redirect this check is truthy and thus the codepath is hit
-      // While the resource actually exists, but only too late
-      // TODO: This should probably be fixed by setting ___webpackCompilationHash before navigationInit() is called
       if (
         pageResources.page.webpackCompilationHash !==
         window.___webpackCompilationHash
@@ -172,9 +170,6 @@ function init() {
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
-
-  // Check for initial page-load redirect
-  maybeRedirect(window.location.pathname)
 }
 
 class RouteAnnouncer extends React.Component {
@@ -231,9 +226,9 @@ class RouteUpdates extends React.Component {
     onRouteUpdate(this.props.location, null)
   }
 
-  shouldComponentUpdate(prevProps) {
-    if (compareLocationProps(prevProps.location, this.props.location)) {
-      onPreRouteUpdate(this.props.location, prevProps.location)
+  shouldComponentUpdate(nextProps) {
+    if (compareLocationProps(this.props.location, nextProps.location)) {
+      onPreRouteUpdate(nextProps.location, this.props.location)
       return true
     }
     return false
