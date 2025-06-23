@@ -1,10 +1,10 @@
 [build]
-  command = "NODE_OPTIONS='--openssl-legacy-provider' npm run build"
+  command = "npm run build"
   publish = "public"
 
 [build.environment]
-  NODE_VERSION = "18.18.0"
-  NPM_VERSION = "9.8.1"
+  NODE_VERSION = "16.20.0"
+  NPM_VERSION = "8.19.4"
 
 [[plugins]]
   package = "@netlify/plugin-gatsby"
