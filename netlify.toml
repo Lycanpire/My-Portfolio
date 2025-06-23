@@ -1,11 +1,11 @@
 [build]
-  command = "npm run clean && npm run build"
+  command = "NODE_OPTIONS='--openssl-legacy-provider' npm run clean && NODE_OPTIONS='--openssl-legacy-provider' npm run build"
   publish = "public"
 
 [build.environment]
-  NODE_VERSION = "18.18.0"
-  NPM_VERSION = "9.8.1"
-  NODE_OPTIONS = ""
+  NODE_VERSION = "16.20.0"
+  NPM_VERSION = "8.19.4"
+  NODE_OPTIONS = "--openssl-legacy-provider"
   GATSBY_CPU_COUNT = "1"
   NODE_ENV = "production"
 
