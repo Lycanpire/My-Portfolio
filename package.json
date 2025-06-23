@@ -2,7 +2,7 @@
   "name": "v4",
   "description": "Personal Website V4",
   "version": "1.0.0",
-  "author": "Syed Akbar Abbas Jafri <syedakbarabbasjafri@gmail.com>",
+  "author": "Syed Akbar Abbas Jafri <saaj.work@gmail.com>",
   "repository": {
     "type": "git",
     "url": ""
@@ -59,7 +59,8 @@
     "react-helmet": "^6.1.0",
     "react-transition-group": "^4.3.0",
     "scrollreveal": "^4.0.5",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "gatsby-remark-code-titles": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -72,7 +73,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.23.2",
-    "gatsby-remark-code-titles": "^1.1.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.1.2",
     "prettier": "^2.2.1"
