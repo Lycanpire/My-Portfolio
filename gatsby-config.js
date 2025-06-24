@@ -2,12 +2,13 @@ const config = require('./src/config');
 
 module.exports = {
   siteMetadata: {
-    title: 'Syed Akbar Abbas Jafri',
+    title: 'Syed Akbar Abbas Jafri | AI Product Manager & Digital Transformation Leader',
     description:
-      'Syed Akbar Abbas Jafri is a Business grad who specializes in building (and occasionally designing) exceptional digital experiences.',
-    siteUrl: 'https://gymmedaari.com', // No trailing slash allowed!
+      'AI Product Manager, Consultant, and Digital Transformation Leader. I help businesses and recruiters solve complex problems with AI, automation, and scalable tech infrastructure. Open to new opportunities and consulting for AI-driven business solutions.',
+    siteUrl: 'https://saaj.space', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@',
+    twitterUsername: '@akbarabbas_ai',
+    keywords: 'AI Product Manager, AI Consultant, Digital Transformation, Business Automation, Recruit AI Talent, SaaS, Product Strategy, AI Solutions, AI Portfolio, Hire AI Expert, AI for Business, AI Platform, AI Infrastructure, AI Project Manager, AI Business Consultant, AI Recruitment, AI SaaS, AI Business Solutions, AI for Enterprises, AI for Startups, AI for SMBs',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

@@ -1,5 +1,6 @@
 export { default as IconAppStore } from './appstore';
 export { default as IconBookmark } from './bookmark';
+export { default as IconChevronDown } from './chevron-down';
 export { default as IconCodepen } from './codepen';
 export { default as IconExternal } from './external';
 export { default as IconFolder } from './folder';

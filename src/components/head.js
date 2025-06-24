@@ -19,6 +19,7 @@ const Head = ({ title, description, image }) => {
             siteUrl
             defaultImage: image
             twitterUsername
+            keywords
           }
         }
       }
@@ -31,6 +32,7 @@ const Head = ({ title, description, image }) => {
     siteUrl,
     defaultImage,
     twitterUsername,
+    keywords,
   } = site.siteMetadata;
 
   const seo = {
@@ -38,14 +40,65 @@ const Head = ({ title, description, image }) => {
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
     url: `${siteUrl}${pathname}`,
+    keywords: keywords,
   };
+
+  // JSON-LD structured data for Person and Website
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Syed Akbar Abbas Jafri',
+      url: seo.url,
+      image: seo.image,
+      jobTitle: 'AI Product Manager & Digital Transformation Leader',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Freelance / Consulting',
+      },
+      sameAs: [
+        'https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/',
+        'https://www.instagram.com/the_guy_is_no_one/',
+        'mailto:saaj.work@gmail.com',
+      ],
+      description: seo.description,
+      email: 'saaj.work@gmail.com',
+      knowsAbout: [
+        'AI Product Management',
+        'AI Consulting',
+        'Business Automation',
+        'Digital Transformation',
+        'SaaS',
+        'Product Strategy',
+        'AI Solutions',
+        'AI Infrastructure',
+      ],
+      alumniOf: {
+        '@type': 'CollegeOrUniversity',
+        name: 'XIMB',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      url: siteUrl,
+      name: defaultTitle,
+      description: defaultDescription,
+      sameAs: [
+        'https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/',
+        'https://www.instagram.com/the_guy_is_no_one/',
+      ],
+    },
+  ];
 
   return (
     <Helmet title={title} defaultTitle={seo.title} titleTemplate={`%s | ${defaultTitle}`}>
       <html lang="en" />
 
       <meta name="description" content={seo.description} />
+      <meta name="keywords" content={seo.keywords} />
       <meta name="image" content={seo.image} />
+      <link rel="canonical" href={seo.url} />
 
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
@@ -60,6 +113,9 @@ const Head = ({ title, description, image }) => {
       <meta name="twitter:image" content={seo.image} />
 
       <meta name="google-site-verification" content="DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk" />
+
+      {/* JSON-LD structured data for Person and Website */}
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </Helmet>
   );
 };
