@@ -139,9 +139,12 @@ const Contact = () => {
       <h2 className="numbered-heading overline">What's Next?</h2>
       <h2 className="title">Let's connect!</h2>
       <p>
-        I'm always open to meaningful conversations — whether it's about tech, AI, product management, or just life in general! 😊
-        Feel free to drop a message on LinkedIn, Instagram, or email — I'll do my best to respond.<br />
-        And hey, if you're thinking of building your own custom portfolio website or want some advice on starting your digital journey, I'd love to help. Let's create something awesome together! 🚀
+        I'm always open to engaging conversations—whether it's about AI, product strategy, building scalable tech infrastructure, or navigating the exciting world of digital business. If you're curious about turning automation ideas into full-fledged AI platforms or want to chat about product management and technology trends (or even life beyond work 😊), feel free to reach out.<br />
+        <br />
+        You can find me on LinkedIn, Instagram, or via email—I do my best to respond to every message.<br />
+        <br />
+        Also, if you're thinking of creating your own personal tech portfolio, launching an AI-driven solution, or simply want guidance on starting your digital journey, I'd be glad to share insights.<br />
+        Let's build something awesome together! 🚀
       </p>
       <button className="email-link" onClick={() => setShowPopup(true)}>
         Connect Now

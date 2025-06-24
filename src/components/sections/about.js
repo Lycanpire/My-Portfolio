@@ -135,34 +135,18 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              Hello! My name is Akbar and I enjoy creating things that live on the tech & Businesses. My
-              interest in Technology started back in 2012 when I decided to try editing custom
-              website — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
+              Hello! I'm Akbar Abbas, passionate about building technology-driven solutions that bridge the gap between business outcomes and AI infrastructure. My journey with technology began in 2012, tinkering with custom websites and hand-coding HTML/CSS. Since then, I've evolved into a strategist who shapes AI-powered platforms that unlock real, measurable value for businesses.
             </p>
 
             <p>
-            Over the years, I’ve had the privilege of contributing to organizations across diverse domains—including an{' '}
-              
-              <a href="https://irisgst.com/">an AI-powered Fintech firm</a>,{' '}
-              <a href="https://www.cognizant.com/in/en/">an IT services leader</a>,{' '}
-              <a href="https://www.ibm.com/">an Innovation Leader corporation</a>, {' '}
-              <a href="https://doubledose.digital/">an advertising agency</a>, and{' '}
-              <a href="https://ximb.edu.in/placement/placement-committee//">a Student-led Placement Committee</a>.  My core expertise lies in Product Management, 
-              AI Consultancy, and Project Management, where I define product vision, lead cross-functional teams, and enable organizations to adopt emerging
-              technologies like AI/ML to drive growth and efficiency.
-      
+              Over the years, I've contributed to organizations across Fintech, IT services, innovation consulting, advertising, and campus talent management. My expertise spans AI Consultancy, Product & Project Management, where I define product visions, lead cross-functional teams, and architect scalable AI systems—not just workflows—that deliver outcomes like revenue growth, lead generation, and operational efficiency.
             </p>
 
             <p>
-              During Covid, I{' '}
-              <a href="https://www.instagram.com/gymmedaari">
-                launched a social media Fitness Consultancy
-              </a>{' '}
-             for helping people staying fit while being at home.
+              Currently, my focus is on helping businesses adopt comprehensive AI infrastructure solutions, such as customized lead-generation platforms and automation systems with user-centric dashboards, driving tangible ROI rather than isolated automation tools. I believe the future lies in full-stack, client-facing AI applications that create value and competitive advantage for enterprises.
             </p>
 
-            <p>Here are a few skills I’ve have garnered recently:</p>
+            <p>Here are a few skills I've garnered recently:</p>
           </div>
 
           <ul className="skills-list">
