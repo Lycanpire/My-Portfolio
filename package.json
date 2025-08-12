@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "browserslist": "> 0.25%, not dead",
   "scripts": {
