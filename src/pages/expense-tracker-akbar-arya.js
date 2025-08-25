@@ -14,6 +14,21 @@ const Container = styled.div`
   background: radial-gradient(80% 80% at 50% 20%, #0b0f1a 0%, #06080f 100%);
   color: #e6e6e6;
   padding: 1rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '🦇';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    font-size: 38vw;
+    line-height: 1;
+    filter: blur(1px);
+    opacity: 0.06;
+    pointer-events: none;
+  }
 `;
 
 const MainContent = styled.div`
@@ -28,6 +43,7 @@ const Card = styled.div`
   border: 1px solid #1f2937;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  backdrop-filter: saturate(120%) blur(2px);
 `;
 
 const Title = styled.h1`
@@ -45,6 +61,24 @@ const Subtitle = styled.p`
   color: #9ca3af;
   text-align: center;
   margin-top: 0.25rem;
+`;
+
+const ThemeChips = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  opacity: 0.9;
+  
+  span {
+    border: 1px solid #1f2937;
+    background: #0b0f1a;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+  }
 `;
 
 const FormGrid = styled.div`
@@ -178,6 +212,12 @@ const ExpenseTrackerAkbarAryaInner = () => {
         <Card>
           <Title>Akbar & Arya — Bachelor Ledger 🦇🏎️⚔️</Title>
           <Subtitle>Batman vibes, weapons stash, and F1 weekends — split like legends.</Subtitle>
+          <ThemeChips>
+            <span>🦇 Batman Mode</span>
+            <span>💣 Grenades</span>
+            <span>🔫 Guns</span>
+            <span>🏎️ F1</span>
+          </ThemeChips>
 
           <FormGrid>
             <Input placeholder="Expense (e.g., Batarang maintenance)" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
@@ -227,10 +267,14 @@ const ExpenseTrackerAkbarAryaInner = () => {
               expenses.map((expense) => (
                 <div key={expense.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1rem', border: '1px solid #1f2937', borderRadius: '8px', marginBottom: '0.75rem', background: '#0b0f1a' }}>
                   <div>
-                    <div style={{ fontWeight: 600 }}>{expense.description}</div>
+                    <div style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+                      <span>🦇</span>
+                      {expense.description}
+                    </div>
                     <div style={{ fontSize: '0.85rem', color: '#9ca3af' }}>{expense.date}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span aria-label="grenades and guns" title="Grenades & Guns">💣 🔫</span>
                     <span style={{ fontWeight: 700 }}>${expense.amount.toFixed(2)}</span>
                     <button onClick={() => startEdit(expense)} style={{ background: 'transparent', color: '#ffd700', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Edit</button>
                     <button onClick={() => deleteExpense(expense.id)} style={{ background: 'transparent', color: '#ff4d4f', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Delete</button>
