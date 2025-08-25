@@ -1,33 +1,15 @@
 [build]
-  command = "nvm use 20.19.2 && npm run clean && npm run build"
+  command = "mise settings add idiomatic_version_file_enable_tools node && nvm use && npm run clean && npm run build"
   publish = "public"
 
 [build.environment]
   NODE_VERSION = "20.19.2"
   NPM_VERSION = "10.8.2"
-  GATSBY_CPU_COUNT = "1"
   NODE_ENV = "production"
-  NODE_OPTIONS = "--max_old_space_size=4096"
+  GATSBY_CPU_COUNT = "1"
 
 [[plugins]]
   package = "@netlify/plugin-gatsby"
 
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
-
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.html]
-  pretty_urls = true
-
-[build.processing.images]
-  compress = true 
