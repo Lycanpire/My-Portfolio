@@ -880,9 +880,54 @@ const ExpenseSplitter = () => {
   );
 };
 
-const ExpenseTrackerPage = ({ location }) => (
-  <ExpenseSplitter />
-);
+const ExpenseTrackerPage = ({ location }) => {
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const PASSWORD = 'Sabar@7868';
+  const STORAGE_KEY = 'expense_tracker_sana_akbar_auth';
+
+  useEffect(() => {
+    const isAuth = sessionStorage.getItem(STORAGE_KEY);
+    if (isAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password === PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem(STORAGE_KEY, 'true');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f' }}>
+        <div style={{ background: '#112240', padding: '2rem', borderRadius: '8px', border: '1px solid #233554', width: '100%', maxWidth: '420px' }}>
+          <h1 style={{ color: '#64ffda', margin: 0, marginBottom: '0.5rem', fontSize: '1.5rem', textAlign: 'center' }}>Enter Password</h1>
+          <p style={{ color: '#8892b0', fontSize: '0.95rem', textAlign: 'center', marginTop: 0, marginBottom: '1.5rem' }}>Akbar & Sana — Private Expense Tracker</p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #233554', background: '#0b1628', color: '#e6f1ff' }}
+              required
+            />
+            <button type="submit" style={{ marginTop: '1rem', width: '100%', padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #64ffda', color: '#0a192f', background: '#64ffda', fontWeight: 600 }}>
+              Access
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return <ExpenseSplitter />;
+};
 
 ExpenseTrackerPage.propTypes = {
   location: PropTypes.object.isRequired,

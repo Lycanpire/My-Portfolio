@@ -1,1 +1,12 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Gatsby build output
+public/
+.cache/
+
+# OS
+.DS_Store
+
+# Env
+.env*
