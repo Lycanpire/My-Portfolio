@@ -1,5 +1,5 @@
 [build]
-  command = "mise settings add idiomatic_version_file_enable_tools node && nvm use && npm run clean && npm run build"
+  command = "npm run build"
   publish = "public"
 
 [build.environment]
