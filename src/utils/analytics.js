@@ -96,24 +96,25 @@ export const fetchAnalyticsData = async () => {
 // Function to get real-time visitor count (simulated)
 export const getRealTimeVisitors = async () => {
   try {
-    // Simulate real-time data
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    // Try serverless function first (works on Netlify/Vercel)
+    const res = await fetch('/.netlify/functions/realtime-analytics', {
+      headers: { 'cache-control': 'no-store' },
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+    // Fallback to mock if API not available
+    throw new Error('Realtime function not available');
+  } catch (_) {
+    // Simulated fallback
+    await new Promise(resolve => setTimeout(resolve, 300));
     const currentVisitors = Math.floor(Math.random() * 10) + 1;
     const activePages = [
       { page: '/', visitors: Math.floor(currentVisitors * 0.5) },
       { page: '/projects', visitors: Math.floor(currentVisitors * 0.3) },
       { page: '/about', visitors: Math.floor(currentVisitors * 0.2) }
     ].filter(page => page.visitors > 0);
-    
-    return {
-      currentVisitors,
-      activePages,
-      timestamp: new Date().toISOString()
-    };
-  } catch (error) {
-    console.error('Error fetching real-time data:', error);
-    throw new Error('Failed to load real-time data');
+    return { currentVisitors, activePages, timestamp: new Date().toISOString() };
   }
 };
 

@@ -181,10 +181,10 @@ const AnalyticsDashboard = () => {
   useEffect(() => {
     loadAnalytics();
     loadRealTimeData();
-    
-    // Refresh real-time data every 30 seconds
-    const realTimeInterval = setInterval(loadRealTimeData, 30000);
-    
+
+    // Refresh real-time data every 5 seconds for near real-time feel
+    const realTimeInterval = setInterval(loadRealTimeData, 5000);
+
     return () => clearInterval(realTimeInterval);
   }, []);
 
@@ -210,7 +210,7 @@ const AnalyticsDashboard = () => {
   return (
     <DashboardContainer>
       <Title>Analytics Dashboard</Title>
-      <Subtitle>Last 30 days • Real-time data updates every 30 seconds</Subtitle>
+      <Subtitle>Last 30 days • Real-time updates every 5 seconds</Subtitle>
       
       <DashboardCard delay="0s">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -242,6 +242,16 @@ const AnalyticsDashboard = () => {
               <StatNumber>{realTimeData.currentVisitors}</StatNumber>
               <StatLabel>Currently Online</StatLabel>
             </RealTimeCard>
+            {realTimeData.activePages && realTimeData.activePages.length > 0 && (
+              <div style={{ marginTop: '0.75rem' }}>
+                {realTimeData.activePages.map((p, idx) => (
+                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', color: '#0a192f', background: 'rgba(255,255,255,0.6)', padding: '6px 10px', borderRadius: '8px', marginTop: '6px' }}>
+                    <span>{p.page}</span>
+                    <span>{p.visitors}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </DashboardCard>

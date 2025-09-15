@@ -140,6 +140,38 @@ const StyledLinks = styled.div`
           text-align: right;
         }
       }
+
+      /* Dropdown */
+      .dropdown-toggle {
+        padding: 10px;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(10, 25, 47, 0.98);
+        border: 1px solid var(--navy-shadow);
+        border-radius: 6px;
+        padding: 6px 0;
+        min-width: 220px;
+        box-shadow: 0 10px 30px -10px var(--navy-shadow);
+        display: none;
+        z-index: 20;
+      }
+
+      &:hover .dropdown-menu,
+      &:focus-within .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-item {
+        display: block;
+        padding: 8px 12px;
+        white-space: nowrap;
+      }
     }
   }
 
@@ -250,7 +282,18 @@ const Nav = ({ isHome }) => {
                     navLinks.map(({ url, name }, i) => (
                       <CSSTransition key={i} classNames={fadeDownClass} timeout={timeout}>
                         <li key={i} style={{ transitionDelay: `${isHome ? i * 100 : 0}ms` }}>
-                          <Link to={url}>{name}</Link>
+                          {name === 'Private Tools' ? (
+                            <div className="dropdown">
+                              <span className="dropdown-toggle">{name}</span>
+                              <div className="dropdown-menu">
+                                <Link className="dropdown-item" to="/expense-tracker" aria-label="Akbar & Sana Tracker">Akbar & Sana Tracker</Link>
+                                <Link className="dropdown-item" to="/expense-tracker-akbar-arya" aria-label="Akbar & Arya Tracker">Akbar & Arya Tracker</Link>
+                                <Link className="dropdown-item" to="/analytics" aria-label="Analytics">Analytics</Link>
+                              </div>
+                            </div>
+                          ) : (
+                            <Link to={url}>{name}</Link>
+                          )}
                         </li>
                       </CSSTransition>
                     ))}

@@ -4,10 +4,12 @@ const preferDefault = m => (m && m.default) || m
 
 
 exports.components = {
-  "component---cache-caches-gatsby-plugin-offline-app-shell-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/.cache/caches/gatsby-plugin-offline/app-shell.js")),
+  "component---cache-dev-404-page-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/.cache/dev-404-page.js")),
   "component---src-pages-404-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/404.js")),
   "component---src-pages-analytics-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/analytics.js")),
   "component---src-pages-archive-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/archive.js")),
+  "component---src-pages-expense-tracker-akbar-arya-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/expense-tracker-akbar-arya.js")),
+  "component---src-pages-expense-tracker-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/expense-tracker.js")),
   "component---src-pages-index-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/index.js")),
   "component---src-pages-pensieve-index-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/pensieve/index.js")),
   "component---src-pages-pensieve-tags-js": preferDefault(require("/Users/Akbar/Desktop/SAAS dev/My-Portfolio/src/pages/pensieve/tags.js")),

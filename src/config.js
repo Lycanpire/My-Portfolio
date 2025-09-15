@@ -35,6 +35,10 @@ module.exports = {
       url: '/#projects',
     },
     {
+      name: 'Private Tools',
+      url: '/#private-tools',
+    },
+    {
       name: 'Blog',
       url: '/#blog',
     },

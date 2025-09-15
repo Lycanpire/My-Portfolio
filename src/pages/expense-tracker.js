@@ -147,6 +147,7 @@ const Button = styled.button`
     
     &:hover {
       background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+    }
   }
 `;
 
@@ -377,7 +378,14 @@ const ExpenseSplitter = () => {
     description: '',
     amount: '',
     paidBy: 'Akbar',
-    splitType: 'equal'
+    splitType: 'equal',
+    category: ''
+  });
+  const [salaries, setSalaries] = useState({ akbar: '', sana: '' });
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const d = new Date();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    return `${d.getFullYear()}-${m}`;
   });
 
 
@@ -413,10 +421,44 @@ const ExpenseSplitter = () => {
     return () => unsubscribe();
   }, []);
 
+  // Load salaries from localStorage
+  useEffect(() => {
+    try {
+      const savedAkbar = localStorage.getItem('salary_akbar') || '';
+      const savedSana = localStorage.getItem('salary_sana') || '';
+      setSalaries({ akbar: savedAkbar, sana: savedSana });
+    } catch (_) {}
+  }, []);
+
+  const updateSalary = (person, value) => {
+    const sanitized = value.replace(/[^0-9.]/g, '');
+    const next = { ...salaries, [person]: sanitized };
+    setSalaries(next);
+    try {
+      localStorage.setItem(person === 'akbar' ? 'salary_akbar' : 'salary_sana', sanitized);
+    } catch (_) {}
+  };
+
+  // Simple keyword-based auto-categorization
+  const autoDetectCategory = (desc) => {
+    const text = desc.toLowerCase();
+    const match = (words) => words.some(w => text.includes(w));
+    if (match(['rent', 'lease', 'landlord'])) return 'Rent';
+    if (match(['uber', 'ola', 'metro', 'bus', 'train', 'flight', 'air', 'taxi'])) return 'Travel';
+    if (match(['grocery', 'groceries', 'vegetable', 'fruit', 'bigbasket', 'blinkit'])) return 'Groceries';
+    if (match(['electric', 'electricity', 'wifi', 'broadband', 'internet', 'water', 'utility', 'gas'])) return 'Utilities';
+    if (match(['movie', 'netflix', 'spotify', 'prime', 'hotstar', 'song', 'concert'])) return 'Entertainment';
+    if (match(['doctor', 'medicine', 'pharmacy', 'hospital', 'clinic', 'health'])) return 'Health';
+    if (match(['zomato', 'swiggy', 'restaurant', 'cafe', 'coffee', 'food', 'pizza', 'burger'])) return 'Food';
+    if (match(['amazon', 'myntra', 'ajio', 'nykaa', 'shopping', 'clothes', 'shoe', 'dress'])) return 'Shopping';
+    return '';
+  };
+
   const addExpense = async () => {
     if (!formData.description || !formData.amount) return;
     
     try {
+      const detected = formData.category || autoDetectCategory(formData.description);
       const newExpense = {
         description: formData.description,
         amount: parseFloat(formData.amount),
@@ -424,9 +466,10 @@ const ExpenseSplitter = () => {
         splitType: formData.splitType,
         date: new Date().toLocaleDateString()
       };
+      if (detected) newExpense.category = detected;
       
       await addExpenseToFirebase(newExpense);
-      setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal' });
+      setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal', category: '' });
     } catch (error) {
       console.error('Error adding expense:', error);
       alert('Failed to add expense. Please try again.');
@@ -437,6 +480,7 @@ const ExpenseSplitter = () => {
     if (!formData.description || !formData.amount) return;
     
     try {
+      const detected = formData.category || autoDetectCategory(formData.description);
       const updatedExpense = {
         description: formData.description,
         amount: parseFloat(formData.amount),
@@ -444,10 +488,11 @@ const ExpenseSplitter = () => {
         splitType: formData.splitType,
         date: new Date().toLocaleDateString()
       };
+      if (detected) updatedExpense.category = detected;
       
       await updateExpenseInFirebase(editingId, updatedExpense);
       setEditingId(null);
-      setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal' });
+      setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal', category: '' });
     } catch (error) {
       console.error('Error updating expense:', error);
       alert('Failed to update expense. Please try again.');
@@ -469,7 +514,8 @@ const ExpenseSplitter = () => {
       description: expense.description,
       amount: expense.amount.toString(),
       paidBy: expense.paidBy,
-      splitType: expense.splitType || 'equal'
+      splitType: expense.splitType || 'equal',
+      category: expense.category || ''
     });
   };
 
@@ -479,32 +525,55 @@ const ExpenseSplitter = () => {
   };
 
   const calculateBalance = () => {
-    let akbarOwes = 0;
-    let sanaOwes = 0;
-    
-    expenses.forEach(expense => {
-      if (expense.splitType === 'equal') {
-        const halfAmount = expense.amount / 2;
-        if (expense.paidBy === 'Akbar') {
-          sanaOwes += halfAmount;
-        } else {
-          akbarOwes += halfAmount;
+    const computeOwes = (list) => {
+      let akbar = 0;
+      let sana = 0;
+      list.forEach(expense => {
+        if (expense.splitType === 'equal') {
+          const half = expense.amount / 2;
+          akbar += half;
+          sana += half;
+        } else if (expense.splitType === 'paidBy') {
+          if (expense.paidBy === 'Akbar') {
+            akbar += expense.amount;
+          } else {
+            sana += expense.amount;
+          }
         }
-      }
-    });
-    
-    const netBalance = akbarOwes - sanaOwes;
-    const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+      });
+      return { akbar, sana };
+    };
+
+    const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
     const akbarPaid = expenses.filter(e => e.paidBy === 'Akbar').reduce((sum, e) => sum + e.amount, 0);
     const sanaPaid = expenses.filter(e => e.paidBy === 'Sana').reduce((sum, e) => sum + e.amount, 0);
-    
+
+    const { akbar: akbarOwes, sana: sanaOwes } = computeOwes(expenses);
+    const netTransfer = (akbarPaid - akbarOwes) - (sanaPaid - sanaOwes);
+
+    const now = new Date();
+    const month = now.getMonth();
+    const year = now.getFullYear();
+    const monthlyExpenses = expenses.filter(e => {
+      const d = e.createdAt instanceof Date ? e.createdAt : null;
+      return d && d.getMonth() === month && d.getFullYear() === year;
+    });
+    const { akbar: akbarOwesMonth, sana: sanaOwesMonth } = computeOwes(monthlyExpenses);
+
+    const akbarSalary = parseFloat(salaries.akbar || '0') || 0;
+    const sanaSalary = parseFloat(salaries.sana || '0') || 0;
+
     return {
       total: totalExpenses,
       akbarPaid,
       sanaPaid,
       akbarOwes,
       sanaOwes,
-      netBalance
+      netBalance: netTransfer,
+      akbarBalanceLeft: Math.max(0, akbarSalary - akbarOwesMonth),
+      sanaBalanceLeft: Math.max(0, sanaSalary - sanaOwesMonth),
+      akbarSalary,
+      sanaSalary
     };
   };
 
@@ -581,6 +650,44 @@ const ExpenseSplitter = () => {
   };
 
   const balance = calculateBalance();
+  const formatRs = (num) => `₹ ${Number(num || 0).toFixed(2)}`;
+
+  // Helpers for analytics
+  const getMonthFromDate = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  const monthFilter = (exp, ym) => {
+    const d = exp.createdAt instanceof Date ? exp.createdAt : null;
+    if (!d) return false;
+    return getMonthFromDate(d) === ym;
+  };
+  const summarizeList = (list) => {
+    const total = list.reduce((s, e) => s + e.amount, 0);
+    const akbarPaid = list.filter(e => e.paidBy === 'Akbar').reduce((s, e) => s + e.amount, 0);
+    const sanaPaid = list.filter(e => e.paidBy === 'Sana').reduce((s, e) => s + e.amount, 0);
+    return { total, akbarPaid, sanaPaid };
+  };
+  const selectedMonthSummary = summarizeList(expenses.filter(e => monthFilter(e, selectedMonth)));
+
+  const buildYearSeries = (year) => {
+    const series = [];
+    for (let m = 1; m <= 12; m++) {
+      const ym = `${year}-${String(m).padStart(2, '0')}`;
+      const { total } = summarizeList(expenses.filter(e => monthFilter(e, ym)));
+      series.push({ ym, total });
+    }
+    return series;
+  };
+  const selectedYear = parseInt(selectedMonth.split('-')[0], 10);
+  const baseYear = selectedYear || new Date().getFullYear();
+  const thisYear = buildYearSeries(baseYear);
+  const lastYear = buildYearSeries(baseYear - 1);
+  const selectedMonStr = selectedMonth.split('-')[1];
+  const selectedMon = parseInt(selectedMonStr, 10);
+  const yearOptions = Array.from({ length: 2099 - 2020 + 1 }, (_, i) => 2020 + i);
+  const monthOptions = [
+    { v: 1, l: 'Jan' }, { v: 2, l: 'Feb' }, { v: 3, l: 'Mar' }, { v: 4, l: 'Apr' },
+    { v: 5, l: 'May' }, { v: 6, l: 'Jun' }, { v: 7, l: 'Jul' }, { v: 8, l: 'Aug' },
+    { v: 9, l: 'Sep' }, { v: 10, l: 'Oct' }, { v: 11, l: 'Nov' }, { v: 12, l: 'Dec' },
+  ];
 
   return (
     <Container>
@@ -661,6 +768,18 @@ const ExpenseSplitter = () => {
             </FormTitle>
             <FormGrid>
               <Input
+                type="number"
+                placeholder="Akbar salary (optional)"
+                value={salaries.akbar}
+                onChange={(e) => updateSalary('akbar', e.target.value)}
+              />
+              <Input
+                type="number"
+                placeholder="Sana salary (optional)"
+                value={salaries.sana}
+                onChange={(e) => updateSalary('sana', e.target.value)}
+              />
+              <Input
                 type="text"
                 placeholder="What did we enjoy together? ✨"
                 value={formData.description}
@@ -672,6 +791,12 @@ const ExpenseSplitter = () => {
                 step="0.01"
                 value={formData.amount}
                 onChange={(e) => setFormData({...formData, amount: e.target.value})}
+              />
+              <Input
+                type="text"
+                placeholder="Category (optional)"
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               />
               <Select
                 value={formData.paidBy}
@@ -715,15 +840,31 @@ const ExpenseSplitter = () => {
               </SummaryTitle>
               <SummaryItem>
                 <span>💕 Total Adventures:</span>
-                <SummaryValue>${balance.total.toFixed(2)}</SummaryValue>
+                <SummaryValue>{formatRs(balance.total)}</SummaryValue>
+              </SummaryItem>
+              <SummaryItem>
+                <span>💙 Akbar salary:</span>
+                <SummaryValue>{formatRs(balance.akbarSalary)}</SummaryValue>
+              </SummaryItem>
+              <SummaryItem>
+                <span>💖 Sana salary:</span>
+                <SummaryValue>{formatRs(balance.sanaSalary)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
                 <span>💙 Akbar's Share:</span>
-                <SummaryValue>${balance.akbarOwes.toFixed(2)}</SummaryValue>
+                <SummaryValue>{formatRs(balance.akbarOwes)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
                 <span>💖 Sana's Share:</span>
-                <SummaryValue>${balance.sanaOwes.toFixed(2)}</SummaryValue>
+                <SummaryValue>{formatRs(balance.sanaOwes)}</SummaryValue>
+              </SummaryItem>
+              <SummaryItem>
+                <span>💙 Akbar balance left:</span>
+                <SummaryValue>{formatRs(balance.akbarBalanceLeft)}</SummaryValue>
+              </SummaryItem>
+              <SummaryItem>
+                <span>💖 Sana balance left:</span>
+                <SummaryValue>{formatRs(balance.sanaBalanceLeft)}</SummaryValue>
               </SummaryItem>
             </SummaryCard>
 
@@ -731,22 +872,22 @@ const ExpenseSplitter = () => {
               <SummaryTitle className="purple">💕 Love Balance</SummaryTitle>
               <SummaryItem>
                 <span>💙 Akbar contributed:</span>
-                <SummaryValue>${balance.akbarPaid.toFixed(2)}</SummaryValue>
+                <SummaryValue>{formatRs(balance.akbarPaid)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
                 <span>💖 Sana contributed:</span>
-                <SummaryValue>${balance.sanaPaid.toFixed(2)}</SummaryValue>
+                <SummaryValue>{formatRs(balance.sanaPaid)}</SummaryValue>
               </SummaryItem>
               <div style={{ borderTop: '1px solid #c4b5fd', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
                 {balance.netBalance > 0 ? (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <span>💝</span>
-                    Sana owes Akbar: ${balance.netBalance.toFixed(2)}
+                    Sana owes Akbar: {formatRs(balance.netBalance)}
                   </div>
                 ) : balance.netBalance < 0 ? (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <span>💝</span>
-                    Akbar owes Sana: ${Math.abs(balance.netBalance).toFixed(2)}
+                    Akbar owes Sana: {formatRs(Math.abs(balance.netBalance))}
                   </div>
                 ) : (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -757,6 +898,56 @@ const ExpenseSplitter = () => {
               </div>
             </SummaryCard>
           </SummaryGrid>
+
+          {/* Analytics: Month-by-Month and YoY */}
+          <Card>
+            <SectionTitle>
+              <Heart size={20} color="#ec4899" /> Insights — Monthly & YoY
+            </SectionTitle>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+              <div>
+                <div style={{ marginBottom: '0.5rem', fontWeight: 600 }}>Selected month</div>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <Select value={selectedYear} onChange={(e) => setSelectedMonth(`${e.target.value}-${String(selectedMon).padStart(2, '0')}`)}>
+                    {yearOptions.map(y => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </Select>
+                  <Select value={selectedMon} onChange={(e) => setSelectedMonth(`${selectedYear}-${String(e.target.value).padStart(2, '0')}`)}>
+                    {monthOptions.map(m => (
+                      <option key={m.v} value={m.v}>{m.l}</option>
+                    ))}
+                  </Select>
+                  <Badge className="purple">Total: {formatRs(selectedMonthSummary.total)}</Badge>
+                  <Badge className="blue">Akbar paid: {formatRs(selectedMonthSummary.akbarPaid)}</Badge>
+                  <Badge className="green">Sana paid: {formatRs(selectedMonthSummary.sanaPaid)}</Badge>
+                </div>
+              </div>
+              <div>
+                <div style={{ marginBottom: '0.5rem', fontWeight: 600 }}>Yearly overview</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{baseYear}</div>
+                    {thisYear.map(({ ym, total }) => (
+                      <div key={ym} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0', borderBottom: '1px dashed #fce7f3' }}>
+                        <span>{ym}</span>
+                        <span>{formatRs(total)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{baseYear - 1}</div>
+                    {lastYear.map(({ ym, total }) => (
+                      <div key={ym} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0', borderBottom: '1px dashed #fce7f3' }}>
+                        <span>{ym}</span>
+                        <span>{formatRs(total)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           {/* Data Management Buttons */}
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
@@ -845,12 +1036,15 @@ const ExpenseSplitter = () => {
                         <Badge className={expense.splitType === 'equal' ? 'green' : 'orange'}>
                           {expense.splitType === 'equal' ? '💕 Shared equally' : `💝 ${expense.paidBy}'s treat`}
                         </Badge>
+                        {expense.category && (
+                          <Badge className="blue">#{expense.category}</Badge>
+                        )}
                       </ExpenseMeta>
                       <ExpenseDate>📅 {expense.date}</ExpenseDate>
                     </ExpenseInfo>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                       <ExpenseAmount>
-                        💰 ${expense.amount.toFixed(2)}
+                        💰 {formatRs(expense.amount)}
                       </ExpenseAmount>
                       <ActionButtons>
                         <ActionButton
