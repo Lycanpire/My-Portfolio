@@ -286,7 +286,7 @@ const Nav = ({ isHome }) => {
                             <div className="dropdown">
                               <span className="dropdown-toggle">{name}</span>
                               <div className="dropdown-menu">
-                                <Link className="dropdown-item" to="/expense-tracker" aria-label="Akbar & Sana Tracker">Akbar & Sana Tracker</Link>
+                                <Link className="dropdown-item" to="/expense-tracker" aria-label="Akbar & Noor Tracker">Akbar & Noor Tracker</Link>
                                 <Link className="dropdown-item" to="/expense-tracker-akbar-arya" aria-label="Akbar & Arya Tracker">Akbar & Arya Tracker</Link>
                                 <Link className="dropdown-item" to="/analytics" aria-label="Analytics">Analytics</Link>
                               </div>

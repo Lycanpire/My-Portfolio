@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import { Trash2, Edit2, Heart, Plus, Coffee, Gift, Wifi, WifiOff } from 'lucide-react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -388,6 +390,20 @@ const ExpenseSplitter = () => {
     return `${d.getFullYear()}-${m}`;
   });
 
+  // Ensure Firebase anonymous auth (required by secured Firestore rules)
+  useEffect(() => {
+    let unsub = () => {};
+    try {
+      if (!auth.currentUser) {
+        signInAnonymously(auth).catch(() => {});
+      }
+      unsub = onAuthStateChanged(auth, () => {});
+    } catch (_) {}
+    return () => {
+      try { unsub(); } catch (_) {}
+    };
+  }, []);
+
 
 
   // Check online status
@@ -459,10 +475,12 @@ const ExpenseSplitter = () => {
     
     try {
       const detected = formData.category || autoDetectCategory(formData.description);
+      // Map display values to backend-compatible values (legacy rules may expect 'Sana')
+      const backendPaidBy = formData.paidBy === 'Noor' ? 'Sana' : formData.paidBy;
       const newExpense = {
         description: formData.description,
         amount: parseFloat(formData.amount),
-        paidBy: formData.paidBy,
+        paidBy: backendPaidBy,
         splitType: formData.splitType,
         date: new Date().toLocaleDateString()
       };
@@ -472,7 +490,7 @@ const ExpenseSplitter = () => {
       setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal', category: '' });
     } catch (error) {
       console.error('Error adding expense:', error);
-      alert('Failed to add expense. Please try again.');
+      alert(`Failed to add expense: ${error?.message || 'Unknown error'}`);
     }
   };
 
@@ -481,10 +499,11 @@ const ExpenseSplitter = () => {
     
     try {
       const detected = formData.category || autoDetectCategory(formData.description);
+      const backendPaidBy = formData.paidBy === 'Noor' ? 'Sana' : formData.paidBy;
       const updatedExpense = {
         description: formData.description,
         amount: parseFloat(formData.amount),
-        paidBy: formData.paidBy,
+        paidBy: backendPaidBy,
         splitType: formData.splitType,
         date: new Date().toLocaleDateString()
       };
@@ -495,7 +514,7 @@ const ExpenseSplitter = () => {
       setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal', category: '' });
     } catch (error) {
       console.error('Error updating expense:', error);
-      alert('Failed to update expense. Please try again.');
+      alert(`Failed to update expense: ${error?.message || 'Unknown error'}`);
     }
   };
 
@@ -504,7 +523,7 @@ const ExpenseSplitter = () => {
       await deleteExpenseFromFirebase(id);
     } catch (error) {
       console.error('Error deleting expense:', error);
-      alert('Failed to delete expense. Please try again.');
+      alert(`Failed to delete expense: ${error?.message || 'Unknown error'}`);
     }
   };
 
@@ -513,7 +532,7 @@ const ExpenseSplitter = () => {
     setFormData({
       description: expense.description,
       amount: expense.amount.toString(),
-      paidBy: expense.paidBy,
+      paidBy: expense.paidBy === 'Sana' ? 'Noor' : expense.paidBy,
       splitType: expense.splitType || 'equal',
       category: expense.category || ''
     });
@@ -539,6 +558,12 @@ const ExpenseSplitter = () => {
           } else {
             sana += expense.amount;
           }
+        } else if (expense.splitType === 'allAkbar') {
+          // 100% of this expense is assigned to Akbar (debt to Akbar)
+          akbar += expense.amount;
+        } else if (expense.splitType === 'allNoor') {
+          // 100% of this expense is assigned to Noor (debt to Noor)
+          sana += expense.amount;
         }
       });
       return { akbar, sana };
@@ -546,7 +571,8 @@ const ExpenseSplitter = () => {
 
     const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
     const akbarPaid = expenses.filter(e => e.paidBy === 'Akbar').reduce((sum, e) => sum + e.amount, 0);
-    const sanaPaid = expenses.filter(e => e.paidBy === 'Sana').reduce((sum, e) => sum + e.amount, 0);
+    // Support legacy records where paidBy was 'Sana' while UI now shows 'Noor'
+    const sanaPaid = expenses.filter(e => e.paidBy === 'Noor' || e.paidBy === 'Sana').reduce((sum, e) => sum + e.amount, 0);
 
     const { akbar: akbarOwes, sana: sanaOwes } = computeOwes(expenses);
     const netTransfer = (akbarPaid - akbarOwes) - (sanaPaid - sanaOwes);
@@ -662,7 +688,7 @@ const ExpenseSplitter = () => {
   const summarizeList = (list) => {
     const total = list.reduce((s, e) => s + e.amount, 0);
     const akbarPaid = list.filter(e => e.paidBy === 'Akbar').reduce((s, e) => s + e.amount, 0);
-    const sanaPaid = list.filter(e => e.paidBy === 'Sana').reduce((s, e) => s + e.amount, 0);
+    const sanaPaid = list.filter(e => e.paidBy === 'Noor' || e.paidBy === 'Sana').reduce((s, e) => s + e.amount, 0);
     return { total, akbarPaid, sanaPaid };
   };
   const selectedMonthSummary = summarizeList(expenses.filter(e => monthFilter(e, selectedMonth)));
@@ -740,7 +766,7 @@ const ExpenseSplitter = () => {
               <Title>Our Love Budget ☁️</Title>
               <Subtitle>
                 <span>💕</span>
-                Akbar & Sana
+                Akbar & Noor
                 <span>💕</span>
                 {expenses.length > 0 && (
                   <span style={{ fontSize: '0.875rem', color: '#ec4899', marginTop: '0.25rem', display: 'block' }}>
@@ -775,7 +801,7 @@ const ExpenseSplitter = () => {
               />
               <Input
                 type="number"
-                placeholder="Sana salary (optional)"
+                placeholder="Noor salary (optional)"
                 value={salaries.sana}
                 onChange={(e) => updateSalary('sana', e.target.value)}
               />
@@ -803,7 +829,7 @@ const ExpenseSplitter = () => {
                 onChange={(e) => setFormData({...formData, paidBy: e.target.value})}
               >
                 <option value="Akbar">💙 Akbar paid</option>
-                <option value="Sana">💖 Sana paid</option>
+                <option value="Noor">💖 Noor paid</option>
               </Select>
               <Select
                 value={formData.splitType}
@@ -811,6 +837,8 @@ const ExpenseSplitter = () => {
               >
                 <option value="equal">💕 Share equally (our love is 50/50)</option>
                 <option value="paidBy">💝 {formData.paidBy}'s treat</option>
+                <option value="allAkbar">🧾 100% owed by Akbar</option>
+                <option value="allNoor">🧾 100% owed by Noor</option>
               </Select>
               <ButtonGroup>
                 {editingId ? (
@@ -847,7 +875,7 @@ const ExpenseSplitter = () => {
                 <SummaryValue>{formatRs(balance.akbarSalary)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
-                <span>💖 Sana salary:</span>
+                <span>💖 Noor salary:</span>
                 <SummaryValue>{formatRs(balance.sanaSalary)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
@@ -855,7 +883,7 @@ const ExpenseSplitter = () => {
                 <SummaryValue>{formatRs(balance.akbarOwes)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
-                <span>💖 Sana's Share:</span>
+                <span>💖 Noor's Share:</span>
                 <SummaryValue>{formatRs(balance.sanaOwes)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
@@ -863,7 +891,7 @@ const ExpenseSplitter = () => {
                 <SummaryValue>{formatRs(balance.akbarBalanceLeft)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
-                <span>💖 Sana balance left:</span>
+                <span>💖 Noor balance left:</span>
                 <SummaryValue>{formatRs(balance.sanaBalanceLeft)}</SummaryValue>
               </SummaryItem>
             </SummaryCard>
@@ -875,19 +903,19 @@ const ExpenseSplitter = () => {
                 <SummaryValue>{formatRs(balance.akbarPaid)}</SummaryValue>
               </SummaryItem>
               <SummaryItem>
-                <span>💖 Sana contributed:</span>
+                <span>💖 Noor contributed:</span>
                 <SummaryValue>{formatRs(balance.sanaPaid)}</SummaryValue>
               </SummaryItem>
               <div style={{ borderTop: '1px solid #c4b5fd', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
                 {balance.netBalance > 0 ? (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <span>💝</span>
-                    Sana owes Akbar: {formatRs(balance.netBalance)}
+                    Noor owes Akbar: {formatRs(balance.netBalance)}
                   </div>
                 ) : balance.netBalance < 0 ? (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <span>💝</span>
-                    Akbar owes Sana: {formatRs(Math.abs(balance.netBalance))}
+                    Akbar owes Noor: {formatRs(Math.abs(balance.netBalance))}
                   </div>
                 ) : (
                   <div style={{ color: '#581c87', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -920,7 +948,7 @@ const ExpenseSplitter = () => {
                   </Select>
                   <Badge className="purple">Total: {formatRs(selectedMonthSummary.total)}</Badge>
                   <Badge className="blue">Akbar paid: {formatRs(selectedMonthSummary.akbarPaid)}</Badge>
-                  <Badge className="green">Sana paid: {formatRs(selectedMonthSummary.sanaPaid)}</Badge>
+                  <Badge className="green">Noor paid: {formatRs(selectedMonthSummary.sanaPaid)}</Badge>
                 </div>
               </div>
               <div>
@@ -1031,10 +1059,16 @@ const ExpenseSplitter = () => {
                           {expense.description}
                         </ExpenseTitle>
                         <Badge className={expense.paidBy === 'Akbar' ? 'blue' : 'purple'}>
-                          {expense.paidBy === 'Akbar' ? '💙 Akbar paid' : '💖 Sana paid'}
+                          {expense.paidBy === 'Akbar' ? '💙 Akbar paid' : '💖 Noor paid'}
                         </Badge>
-                        <Badge className={expense.splitType === 'equal' ? 'green' : 'orange'}>
-                          {expense.splitType === 'equal' ? '💕 Shared equally' : `💝 ${expense.paidBy}'s treat`}
+                        <Badge className={(expense.splitType === 'equal' ? 'green' : 'orange')}>
+                          {expense.splitType === 'equal'
+                            ? '💕 Shared equally'
+                            : expense.splitType === 'paidBy'
+                              ? `💝 ${expense.paidBy}'s treat`
+                              : expense.splitType === 'allAkbar'
+                                ? '🧾 100% owed by Akbar'
+                                : '🧾 100% owed by Noor'}
                         </Badge>
                         {expense.category && (
                           <Badge className="blue">#{expense.category}</Badge>
@@ -1101,7 +1135,7 @@ const ExpenseTrackerPage = ({ location }) => {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f' }}>
         <div style={{ background: '#112240', padding: '2rem', borderRadius: '8px', border: '1px solid #233554', width: '100%', maxWidth: '420px' }}>
           <h1 style={{ color: '#64ffda', margin: 0, marginBottom: '0.5rem', fontSize: '1.5rem', textAlign: 'center' }}>Enter Password</h1>
-          <p style={{ color: '#8892b0', fontSize: '0.95rem', textAlign: 'center', marginTop: 0, marginBottom: '1.5rem' }}>Akbar & Sana — Private Expense Tracker</p>
+          <p style={{ color: '#8892b0', fontSize: '0.95rem', textAlign: 'center', marginTop: 0, marginBottom: '1.5rem' }}>Akbar & Noor — Private Expense Tracker</p>
           <form onSubmit={handleSubmit}>
             <input
               type="password"

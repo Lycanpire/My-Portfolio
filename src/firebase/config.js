@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 // Your Firebase configuration
@@ -17,8 +17,19 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore
-export const db = getFirestore(app);
+// Initialize Firestore with dev-friendly settings (safe for hot-reload)
+let dbInstance;
+try {
+  dbInstance = initializeFirestore(app, {
+    experimentalAutoDetectLongPolling: true,
+    ignoreUndefinedProperties: true,
+  });
+} catch (e) {
+  // If already initialized (e.g., due to hot-reload), reuse existing instance
+  dbInstance = getFirestore(app);
+}
+
+export const db = dbInstance;
 
 // Initialize Auth
 export const auth = getAuth(app);

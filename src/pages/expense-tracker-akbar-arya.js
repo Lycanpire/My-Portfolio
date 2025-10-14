@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { 
@@ -114,8 +116,17 @@ const ExpenseTrackerAkbarAryaInner = () => {
   });
 
   useEffect(() => {
+    // Ensure anonymous auth for Firestore permissions
+    let unsubAuth = () => {};
+    try {
+      if (!auth.currentUser) {
+        signInAnonymously(auth).catch(() => {});
+      }
+      unsubAuth = onAuthStateChanged(auth, () => {});
+    } catch (_) {}
+    
     const unsubscribe = subscribeToExpenses((data) => setExpenses(data));
-    return () => unsubscribe();
+    return () => { try { unsubAuth(); } catch (_) {}; unsubscribe(); };
   }, []);
 
   const addExpense = async () => {
