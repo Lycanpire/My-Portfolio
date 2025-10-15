@@ -486,10 +486,25 @@ const ExpenseSplitter = () => {
       };
       if (detected) newExpense.category = detected;
       
-      await addExpenseToFirebase(newExpense);
+      console.log('Submitting expense:', newExpense);
+      const result = await addExpenseToFirebase(newExpense);
+      console.log('Expense submitted successfully:', result);
+      
       setFormData({ description: '', amount: '', paidBy: 'Akbar', splitType: 'equal', category: '' });
+      
+      // Show success message
+      if (result.__local) {
+        alert('Expense saved locally (Firebase unavailable). Will sync when connection is restored.');
+      } else {
+        alert('Expense added successfully!');
+      }
     } catch (error) {
       console.error('Error adding expense:', error);
+      console.error('Error details:', {
+        code: error?.code,
+        message: error?.message,
+        stack: error?.stack
+      });
       alert(`Failed to add expense: ${error?.message || 'Unknown error'}`);
     }
   };
@@ -545,28 +560,38 @@ const ExpenseSplitter = () => {
 
   const calculateBalance = () => {
     const computeOwes = (list) => {
-      let akbar = 0;
-      let sana = 0;
+      let akbarOwes = 0;
+      let sanaOwes = 0;
+      
       list.forEach(expense => {
-        if (expense.splitType === 'equal') {
-          const half = expense.amount / 2;
-          akbar += half;
-          sana += half;
-        } else if (expense.splitType === 'paidBy') {
-          if (expense.paidBy === 'Akbar') {
-            akbar += expense.amount;
-          } else {
-            sana += expense.amount;
-          }
-        } else if (expense.splitType === 'allAkbar') {
-          // 100% of this expense is assigned to Akbar (debt to Akbar)
-          akbar += expense.amount;
-        } else if (expense.splitType === 'allNoor') {
-          // 100% of this expense is assigned to Noor (debt to Noor)
-          sana += expense.amount;
+        const amount = expense.amount;
+        const splitType = expense.splitType || 'equal';
+        
+        switch (splitType) {
+          case 'equal':
+            // Split equally - each owes half
+            akbarOwes += expense.paidBy === 'Sana' || expense.paidBy === 'Noor' ? amount / 2 : 0;
+            sanaOwes += expense.paidBy === 'Akbar' ? amount / 2 : 0;
+            break;
+          case 'paidBy':
+            // Who paid covers all - no one owes anything
+            break;
+          case 'allAkbar':
+            // Akbar owes the full amount (regardless of who paid)
+            akbarOwes += amount;
+            break;
+          case 'allNoor':
+            // Noor owes the full amount (regardless of who paid)
+            sanaOwes += amount;
+            break;
+          default:
+            // Default to equal split
+            akbarOwes += expense.paidBy === 'Sana' || expense.paidBy === 'Noor' ? amount / 2 : 0;
+            sanaOwes += expense.paidBy === 'Akbar' ? amount / 2 : 0;
         }
       });
-      return { akbar, sana };
+      
+      return { akbar: akbarOwes, sana: sanaOwes };
     };
 
     const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
@@ -575,7 +600,8 @@ const ExpenseSplitter = () => {
     const sanaPaid = expenses.filter(e => e.paidBy === 'Noor' || e.paidBy === 'Sana').reduce((sum, e) => sum + e.amount, 0);
 
     const { akbar: akbarOwes, sana: sanaOwes } = computeOwes(expenses);
-    const netTransfer = (akbarPaid - akbarOwes) - (sanaPaid - sanaOwes);
+    // Net balance: positive means Akbar is owed money, negative means Akbar owes money
+    const netBalance = sanaOwes - akbarOwes;
 
     const now = new Date();
     const month = now.getMonth();
@@ -595,7 +621,7 @@ const ExpenseSplitter = () => {
       sanaPaid,
       akbarOwes,
       sanaOwes,
-      netBalance: netTransfer,
+      netBalance: netBalance,
       akbarBalanceLeft: Math.max(0, akbarSalary - akbarOwesMonth),
       sanaBalanceLeft: Math.max(0, sanaSalary - sanaOwesMonth),
       akbarSalary,
@@ -926,6 +952,50 @@ const ExpenseSplitter = () => {
               </div>
             </SummaryCard>
           </SummaryGrid>
+
+          <SummaryCard className="blue">
+            <SummaryTitle className="blue">💕 Detailed Breakdown</SummaryTitle>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <div style={{ color: '#dc2626', fontWeight: 600, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  💙 Akbar's Share
+                </div>
+                <SummaryItem>
+                  <span>Owes:</span>
+                  <SummaryValue>{formatRs(balance.akbarOwes)}</SummaryValue>
+                </SummaryItem>
+                <SummaryItem>
+                  <span>Paid:</span>
+                  <SummaryValue>{formatRs(balance.akbarPaid)}</SummaryValue>
+                </SummaryItem>
+                <SummaryItem style={{ borderTop: '1px solid #e5e7eb', paddingTop: '0.5rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                  <span>Net:</span>
+                  <SummaryValue style={{ color: balance.akbarPaid >= balance.akbarOwes ? '#10b981' : '#ef4444' }}>
+                    {formatRs(balance.akbarPaid - balance.akbarOwes)}
+                  </SummaryValue>
+                </SummaryItem>
+              </div>
+              <div>
+                <div style={{ color: '#db2777', fontWeight: 600, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  💖 Noor's Share
+                </div>
+                <SummaryItem>
+                  <span>Owes:</span>
+                  <SummaryValue>{formatRs(balance.sanaOwes)}</SummaryValue>
+                </SummaryItem>
+                <SummaryItem>
+                  <span>Paid:</span>
+                  <SummaryValue>{formatRs(balance.sanaPaid)}</SummaryValue>
+                </SummaryItem>
+                <SummaryItem style={{ borderTop: '1px solid #e5e7eb', paddingTop: '0.5rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                  <span>Net:</span>
+                  <SummaryValue style={{ color: balance.sanaPaid >= balance.sanaOwes ? '#10b981' : '#ef4444' }}>
+                    {formatRs(balance.sanaPaid - balance.sanaOwes)}
+                  </SummaryValue>
+                </SummaryItem>
+              </div>
+            </div>
+          </SummaryCard>
 
           {/* Analytics: Month-by-Month and YoY */}
           <Card>

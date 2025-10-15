@@ -179,9 +179,41 @@ const ExpenseTrackerAkbarAryaInner = () => {
   const total = expenses.reduce((s, e) => s + e.amount, 0);
   const akbarPaid = expenses.filter(e => e.paidBy === 'Akbar').reduce((s, e) => s + e.amount, 0);
   const aryaPaid = expenses.filter(e => e.paidBy === 'Arya').reduce((s, e) => s + e.amount, 0);
-  const akbarOwes = expenses.filter(e => e.splitType === 'equal').reduce((s, e) => s + (e.paidBy === 'Arya' ? e.amount / 2 : 0), 0);
-  const aryaOwes = expenses.filter(e => e.splitType === 'equal').reduce((s, e) => s + (e.paidBy === 'Akbar' ? e.amount / 2 : 0), 0);
-  const net = akbarOwes - aryaOwes;
+  
+  // Calculate what each person owes based on split type
+  let akbarOwes = 0;
+  let aryaOwes = 0;
+  
+  expenses.forEach(expense => {
+    const amount = expense.amount;
+    const splitType = expense.splitType || 'equal';
+    
+    switch (splitType) {
+      case 'equal':
+        // Split equally - each owes half
+        akbarOwes += expense.paidBy === 'Arya' ? amount / 2 : 0;
+        aryaOwes += expense.paidBy === 'Akbar' ? amount / 2 : 0;
+        break;
+      case 'paidBy':
+        // Who paid covers all - no one owes anything
+        break;
+      case 'akbarOwesAll':
+        // Akbar owes the full amount (regardless of who paid)
+        akbarOwes += amount;
+        break;
+      case 'aryaOwesAll':
+        // Arya owes the full amount (regardless of who paid)
+        aryaOwes += amount;
+        break;
+      default:
+        // Default to equal split
+        akbarOwes += expense.paidBy === 'Arya' ? amount / 2 : 0;
+        aryaOwes += expense.paidBy === 'Akbar' ? amount / 2 : 0;
+    }
+  });
+  
+  // Net balance: positive means Akbar is owed money, negative means Akbar owes money
+  const net = aryaOwes - akbarOwes;
 
   return (
     <Container>
@@ -200,6 +232,8 @@ const ExpenseTrackerAkbarAryaInner = () => {
             <Select value={formData.splitType} onChange={(e) => setFormData({ ...formData, splitType: e.target.value })}>
               <option value="equal">Split equally</option>
               <option value="paidBy">Who paid covers all</option>
+              <option value="akbarOwesAll">Akbar owes all</option>
+              <option value="aryaOwesAll">Arya owes all</option>
             </Select>
             {editingId ? (
               <Button className="primary" onClick={updateExpense}>Update</Button>
@@ -226,6 +260,32 @@ const ExpenseTrackerAkbarAryaInner = () => {
               )}
             </Card>
           </div>
+          
+          <Card>
+            <div style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Detailed Breakdown</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <div style={{ color: '#ffd700', fontWeight: 600, marginBottom: '0.5rem' }}>Akbar's Share</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Owes:</span><span>${akbarOwes.toFixed(2)}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Paid:</span><span>${akbarPaid.toFixed(2)}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #1f2937' }}>
+                  <span>Net:</span><span style={{ color: akbarPaid >= akbarOwes ? '#10b981' : '#ef4444' }}>
+                    ${(akbarPaid - akbarOwes).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div style={{ color: '#ff0000', fontWeight: 600, marginBottom: '0.5rem' }}>Arya's Share</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Owes:</span><span>${aryaOwes.toFixed(2)}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Paid:</span><span>${aryaPaid.toFixed(2)}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #1f2937' }}>
+                  <span>Net:</span><span style={{ color: aryaPaid >= aryaOwes ? '#10b981' : '#ef4444' }}>
+                    ${(aryaPaid - aryaOwes).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <Button className="secondary" onClick={clearAll}>Reset</Button>
@@ -235,19 +295,30 @@ const ExpenseTrackerAkbarAryaInner = () => {
             {expenses.length === 0 ? (
               <p style={{ color: '#9ca3af', textAlign: 'center' }}>No entries yet — suit up and add some.</p>
             ) : (
-              expenses.map((expense) => (
-                <div key={expense.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1rem', border: '1px solid #1f2937', borderRadius: '8px', marginBottom: '0.75rem', background: '#0b0f1a' }}>
-                  <div>
-                    <div style={{ fontWeight: 600 }}>{expense.description}</div>
-                    <div style={{ fontSize: '0.85rem', color: '#9ca3af' }}>{expense.date}</div>
+              expenses.map((expense) => {
+                const splitTypeLabels = {
+                  'equal': 'Split equally',
+                  'paidBy': 'Who paid covers all',
+                  'akbarOwesAll': 'Akbar owes all',
+                  'aryaOwesAll': 'Arya owes all'
+                };
+                
+                return (
+                  <div key={expense.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1rem', border: '1px solid #1f2937', borderRadius: '8px', marginBottom: '0.75rem', background: '#0b0f1a' }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600 }}>{expense.description}</div>
+                      <div style={{ fontSize: '0.85rem', color: '#9ca3af' }}>
+                        {expense.date} • {expense.paidBy} paid • {splitTypeLabels[expense.splitType] || 'Split equally'}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontWeight: 700 }}>${expense.amount.toFixed(2)}</span>
+                      <button onClick={() => startEdit(expense)} style={{ background: 'transparent', color: '#ffd700', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Edit</button>
+                      <button onClick={() => deleteExpense(expense.id)} style={{ background: 'transparent', color: '#ff4d4f', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Delete</button>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontWeight: 700 }}>${expense.amount.toFixed(2)}</span>
-                    <button onClick={() => startEdit(expense)} style={{ background: 'transparent', color: '#ffd700', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Edit</button>
-                    <button onClick={() => deleteExpense(expense.id)} style={{ background: 'transparent', color: '#ff4d4f', border: '1px solid #1f2937', padding: '0.25rem 0.5rem', borderRadius: '6px' }}>Delete</button>
-                  </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </Card>

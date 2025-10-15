@@ -40,7 +40,7 @@ module.exports = {
     },
     {
       name: 'Blog',
-      url: '/#blog',
+      url: '/pensieve',
     },
    
   ],

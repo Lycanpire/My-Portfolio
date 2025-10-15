@@ -1,7 +1,7 @@
 ---
 title: "AIDLC in Practice: E‑commerce Modules with AI‑Assisted Dev"
 description: "Concrete e‑commerce examples applying the AI‑Driven Development Lifecycle (AIDLC): from product catalog to checkout and inventory, with Cursor prompts and CodeRabbit reviews."
-date: 2025-09-18
+date: 2025-10-16
 draft: false
 slug: /pensieve/aidlc-ecommerce
 tags:

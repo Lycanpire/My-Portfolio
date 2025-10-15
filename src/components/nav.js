@@ -291,6 +291,24 @@ const Nav = ({ isHome }) => {
                                 <Link className="dropdown-item" to="/analytics" aria-label="Analytics">Analytics</Link>
                               </div>
                             </div>
+                          ) : url.startsWith('/#') ? (
+                            <a 
+                              href={url}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                const targetId = url.substring(2); // Remove '/#'
+                                const element = document.getElementById(targetId);
+                                if (element) {
+                                  // Use instant scroll without animation for better UX
+                                  element.scrollIntoView({ behavior: 'auto', block: 'start' });
+                                } else {
+                                  // If not on homepage, navigate to homepage first
+                                  window.location.href = url;
+                                }
+                              }}
+                            >
+                              {name}
+                            </a>
                           ) : (
                             <Link to={url}>{name}</Link>
                           )}
