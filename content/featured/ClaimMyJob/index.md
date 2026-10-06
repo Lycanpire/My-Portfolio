@@ -4,6 +4,7 @@ title: 'Claim My Job AI Career Solution'
 cover: './cover.png'
 github: ''
 external: 'https://www.claimmyjob.com'
+cta: ''
 tech:
   - Generative AI
   - LLMs
