@@ -1,6 +1,6 @@
 ---
 date: '2024-02-01'
-title: 'Growth @MyBrand.Club'
+title: 'Product Cofounder @MyBrand.Club'
 cover: './cover.png'
 github: ''
 external: 'https://mybrand.club'

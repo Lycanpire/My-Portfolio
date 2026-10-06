@@ -1,6 +1,6 @@
 ---
 date: '2023-10-01'
-title: 'Growth @MyBrand.Club'
+title: 'Product Cofounder @MyBrand.Club'
 github: ''
 external: 'https://mybrand.club'
 tech:
