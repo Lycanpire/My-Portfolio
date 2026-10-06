@@ -3,6 +3,7 @@
 Syed Akbar Abbas Jafri is a highly accomplished Technical Program and Product Manager with a proven track record of driving cross-functional collaboration and delivering innovative solutions. He holds a Certified ScrumMaster (CSM) credential, Lean Six Sigma Green Belt, and has demonstrated success at companies like IRIS Business Services, Cognizant, and IBM.
 
 ## Professional Experience
+- **Technical Program Manager @ Paytm** (December 2025 - September 2026): Orchestrated strategic alignment for B2B FinTech product development across a 50+ member team. Directed the critical iPay product launch. Managed 4 complex Third-Party API Integrations and executed AI-powered solutions to optimize merchant onboarding.
 - **Product/Project Manager @ IRIS Business Services Ltd.** (July 2024 - Present): Led a cross-functional team of 20+ across 7 projects, including the FinTech SAAS Software for Govt. of Karnataka MSME Portal. Led the complete software audit process for GSTN (Goods and Services Tax Network), Government of India.
 - **Associate (Consultant Analyst / Full-Stack Developer) @ Cognizant** (July 2019 - May 2022): Coordinated Product deployment and regression test planning for E-Commerce and BFSI sector. Designed web applications using ReactJS, Java & MySQL.
 - **Sales Specialist Intern @ IBM** (April 2023 - June 2023): Orchestrated client engagement models for IBM's Product offerings. Conducted Market Research using Salesforce, Seismic, and ZoomInfo.
