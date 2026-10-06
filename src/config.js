@@ -31,8 +31,12 @@ module.exports = {
       url: '/#jobs',
     },
     {
-      name: 'Work/ Certifications',
+      name: 'Work',
       url: '/#projects',
+    },
+    {
+      name: 'Certifications',
+      url: '/#certifications',
     },
     {
       name: 'Private Tools',

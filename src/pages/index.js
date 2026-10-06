@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Layout, Hero, About, Jobs, Featured, Projects, Blog, Contact } from '@components';
+import { Layout, Hero, About, Jobs, Featured, Projects, Certifications, Blog, Contact } from '@components';
 import { Link } from 'gatsby';
 
 const StyledMainContainer = styled.main`
@@ -16,6 +16,7 @@ const IndexPage = ({ location }) => (
       <Jobs />
       <Featured />
       <Projects />
+      <Certifications />
       <Blog />
       <div style={{ marginTop: '4rem', textAlign: 'center' }}>
         <h2 style={{ fontSize: '1.5rem' }}>Private Tools</h2>
