@@ -3,6 +3,7 @@ exports.components = {
   "component---src-pages-404-js": () => import("./../../../src/pages/404.js?export=default" /* webpackChunkName: "component---src-pages-404-js" */),
   "component---src-pages-analytics-js": () => import("./../../../src/pages/analytics.js?export=default" /* webpackChunkName: "component---src-pages-analytics-js" */),
   "component---src-pages-archive-js": () => import("./../../../src/pages/archive.js?export=default" /* webpackChunkName: "component---src-pages-archive-js" */),
+  "component---src-pages-blog-js": () => import("./../../../src/pages/blog.js?export=default" /* webpackChunkName: "component---src-pages-blog-js" */),
   "component---src-pages-expense-tracker-akbar-arya-js": () => import("./../../../src/pages/expense-tracker-akbar-arya.js?export=default" /* webpackChunkName: "component---src-pages-expense-tracker-akbar-arya-js" */),
   "component---src-pages-expense-tracker-js": () => import("./../../../src/pages/expense-tracker.js?export=default" /* webpackChunkName: "component---src-pages-expense-tracker-js" */),
   "component---src-pages-index-js": () => import("./../../../src/pages/index.js?export=default" /* webpackChunkName: "component---src-pages-index-js" */),

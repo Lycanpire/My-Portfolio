@@ -1,34 +1,34 @@
 var plugins = [{
       name: 'gatsby-plugin-react-helmet',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-react-helmet/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-react-helmet/gatsby-ssr.js'),
       options: {"plugins":[]},
     },{
       name: 'gatsby-plugin-styled-components',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-styled-components/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-styled-components/gatsby-ssr.js'),
       options: {"plugins":[],"displayName":true,"fileName":true,"minify":true,"namespace":"","transpileTemplateLiterals":true,"topLevelImportPaths":[],"pure":false,"disableVendorPrefixes":false},
     },{
       name: 'gatsby-plugin-image',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-image/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-image/gatsby-ssr.js'),
       options: {"plugins":[]},
     },{
       name: 'gatsby-plugin-sitemap',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-sitemap/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-sitemap/gatsby-ssr.js'),
       options: {"plugins":[],"output":"/","createLinkInHead":true,"entryLimit":45000,"query":"{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }","excludes":[]},
     },{
       name: 'gatsby-plugin-manifest',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-manifest/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-manifest/gatsby-ssr.js'),
       options: {"plugins":[],"name":"Syed Akbar Abbas Jafri","short_name":"Akbar","start_url":"/","background_color":"#020c1b","theme_color":"#0a192f","display":"minimal-ui","icon":"src/images/logo.png","legacy":true,"theme_color_in_head":true,"cache_busting_mode":"query","crossOrigin":"anonymous","include_favicon":true,"cacheDigest":"82b27089a4eb21f04ccd07e8504510df"},
     },{
       name: 'gatsby-plugin-offline',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-offline/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-offline/gatsby-ssr.js'),
       options: {"plugins":[]},
     },{
       name: 'gatsby-plugin-google-analytics',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby-plugin-google-analytics/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby-plugin-google-analytics/gatsby-ssr.js'),
       options: {"plugins":[],"trackingId":"G-XXXXXXXXXX","head":true,"anonymize":true,"respectDNT":true,"pageTransitionDelay":0,"enableWebVitalsTracking":true,"exclude":[]},
     },{
       name: 'partytown',
-      plugin: require('/Users/Akbar/Desktop/SAAS dev/My-Portfolio/node_modules/gatsby/dist/internal-plugins/partytown/gatsby-ssr.js'),
+      plugin: require('/Users/Akbar/Claim my job antigravity/Portfolio-Syed Akbar Abbas Jafri/node_modules/gatsby/dist/internal-plugins/partytown/gatsby-ssr.js'),
       options: {"plugins":[]},
     }]
 /* global plugins */
