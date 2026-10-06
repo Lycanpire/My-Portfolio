@@ -1,6 +1,6 @@
 ---
 date: '2023-04-19'
-title: 'Sales Specialist I @ IBMntern'
+title: 'Sales Specialist Intern'
 company: 'IBM'
 location: 'Mumbai, Maharashtra'
 range: 'April 2023 - June 2023'
