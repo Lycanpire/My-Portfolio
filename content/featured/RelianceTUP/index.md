@@ -1,5 +1,5 @@
 ---
-date: '1'
+date: '2024-01-01'
 title: 'Reliance T.U.P 9.0 Semi-Finalist'
 cover: './cover.jpg'
 github: ''

@@ -1,5 +1,5 @@
 ---
-date: '3'
+date: '2024-03-01'
 title: 'Claim My Job AI Career Solution'
 cover: './cover.png'
 github: ''
