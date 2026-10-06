@@ -12,6 +12,6 @@ tech:
 showInProjects: true
 ---
 
-A nicer look at your GitHub profile and repo stats. Includes data visualizations of your top languages, starred repositories, and sort through your top repos by number of stars, forks, and size.
+Completed the Fundamentals of Digital Marketing certification from Google, mastering core concepts in digital advertising, SEO, analytics, and e-commerce strategy.
 
-FRA X4F E29
+Credential ID: FRA X4F E29

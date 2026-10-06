@@ -1,0 +1,28 @@
+# Syed Akbar Abbas Jafri - Product & Project Manager
+
+Syed Akbar Abbas Jafri is a highly accomplished Technical Program and Product Manager with a proven track record of driving cross-functional collaboration and delivering innovative solutions. He holds a Certified ScrumMaster (CSM) credential, Lean Six Sigma Green Belt, and has demonstrated success at companies like IRIS Business Services, Cognizant, and IBM.
+
+## Professional Experience
+- **Product/Project Manager @ IRIS Business Services Ltd.** (July 2024 - Present): Led a cross-functional team of 20+ across 7 projects, including the FinTech SAAS Software for Govt. of Karnataka MSME Portal. Led the complete software audit process for GSTN (Goods and Services Tax Network), Government of India.
+- **Associate (Consultant Analyst / Full-Stack Developer) @ Cognizant** (July 2019 - May 2022): Coordinated Product deployment and regression test planning for E-Commerce and BFSI sector. Designed web applications using ReactJS, Java & MySQL.
+- **Sales Specialist Intern @ IBM** (April 2023 - June 2023): Orchestrated client engagement models for IBM's Product offerings. Conducted Market Research using Salesforce, Seismic, and ZoomInfo.
+
+## Startups & Projects
+- **Claim My Job**: Co-founder of an AI-powered B2C SaaS platform simplifying job applications with LLMs and auto-apply features. (claimmyjob.com)
+- **MyBrand.Club**: Product Cofounder of a mobile-first e-commerce builder for personal branding. (mybrand.club)
+- **Reliance T.U.P 9.0**: National Semifinalist in The Ultimate Pitch.
+- **University of Bath Case Competition**: 1st Runner Up internationally.
+
+## Certifications
+- Certified ScrumMaster (CSM) - Scrum Alliance (2025)
+- McKinsey Forward Program - McKinsey & Company (2025)
+- Generative AI Overview for Project Managers - PMI (2025)
+- IBM AI Associate Product Manager - IBM (2023)
+- Lean Six Sigma Green Belt - KPMG (2022)
+- Bloomberg Market Concepts - Bloomberg (2023)
+- Google Fundamentals of Digital Marketing (2022)
+
+## Contact
+- Email: saaj.work@gmail.com
+- LinkedIn: https://www.linkedin.com/in/akbar-abbas/
+- GitHub: https://github.com/Lycanpire
