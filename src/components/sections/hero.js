@@ -85,7 +85,7 @@ const Hero = () => {
   const five = (
     <a
       className="email-link"
-      href="https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/"
+      href="https://www.linkedin.com/in/akbar-abbas/"
       target="_blank"
       rel="noreferrer">
       Also, Feel free to reach out — whether it's for collaboration, tech talk, or just a good conversation!

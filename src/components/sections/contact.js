@@ -157,7 +157,7 @@ const Contact = () => {
             <div className="connect-options">
               <a
                 className="connect-btn"
-                href="https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/"
+                href="https://www.linkedin.com/in/akbar-abbas/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -16,7 +16,7 @@ module.exports = {
     },
     {
       name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/',
+      url: 'https://www.linkedin.com/in/akbar-abbas/',
     },
 
   ],

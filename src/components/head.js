@@ -57,7 +57,7 @@ const Head = ({ title, description, image }) => {
         name: 'Freelance / Consulting',
       },
       sameAs: [
-        'https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/',
+        'https://www.linkedin.com/in/akbar-abbas/',
         'https://www.instagram.com/the_guy_is_no_one/',
         'mailto:saaj.work@gmail.com',
       ],
@@ -85,7 +85,7 @@ const Head = ({ title, description, image }) => {
       name: defaultTitle,
       description: defaultDescription,
       sameAs: [
-        'https://www.linkedin.com/in/syed-akbar-abbas-jafri-151a38150/',
+        'https://www.linkedin.com/in/akbar-abbas/',
         'https://www.instagram.com/the_guy_is_no_one/',
       ],
     },
