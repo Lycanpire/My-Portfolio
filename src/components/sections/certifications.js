@@ -220,7 +220,7 @@ const Certifications = () => {
         <header>
           <div className="project-top">
             <div className="folder">
-              <Icon name="Folder" />
+              <Icon name="Bookmark" />
             </div>
             <div className="project-links">
               {github && (
